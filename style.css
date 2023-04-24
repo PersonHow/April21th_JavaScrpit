@@ -1,0 +1,45 @@
+body {
+  background-color: #000307;
+  width: 100vw;
+}
+
+h1, h2, label {
+  color: gold;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+main {
+  width: 100vw;
+  height: 300px;
+  font-size: 20pt;
+}
+main .titla {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+main .boxGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+main .btnArea {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}/*# sourceMappingURL=style.css.map */
