@@ -13,191 +13,102 @@ const start = document.querySelector("#btn");
 // Response
 const res = document.querySelector("#food");
 
-// 飲食列表
-const meilList =[
-    {
-        "name": "食在一方",
-        "category": ["brunch"],
-        "filter": false
-    },
-    {
-        "name": "日十",
-        "category": ["brunch"],
-        "filter": false
-    },
-    {
-        "name": "鍋燒麵",
-        "category": ["noodle"],
-        "filter": false
-    },
-    {
-        "name": "炒飯",
-        "category": ["rice"],
-        "filter": false
-    },
-    {
-        "name": "八方雲集",
-        "category": ["other"],
-        "filter": false
-    },
-    {
-        "name": "火鍋",
-        "category": ["other"],
-        "filter": false
-    },
-    {
-        "name": "韓式料理",
-        "category": ["rice", "noodle"],
-        "filter": false
-    },
-    {
-        "name": "小飯糰大飯糰",
-        "category": ["rice"],
-        "filter": false
-    },
-    {
-        "name": "後校門滷肉飯",
-        "category": ["rice", "noodle"],
-        "filter": false
-    },
-    {
-        "name": "魚耶",
-        "category": ["brunch", "rice", "noodle"],
-        "filter": false
-    },
-    {
-        "name": "吳家鴨香飯",
-        "category": ["rice", "noodle"],
-        "filter": false
-    }
-];
 
+let sourceData = [];
 
+let newOrderList =[]; 
 
-// start.addEventListener('click', function(){
-// const random = Math.floor(Math.random() * meilList.length);
-// res.innerText = meilList[random].name;
-// })
-const noodleList = [];
-const riceList = [];
-const brunchList = [];
-const otherList = [];
+//RESTful API 目前的主流
+//串接API或資料夾檔案的語法
+// fetch = 非同步語法
+fetch("./foodList.json")
+    .then(function(response){
 
+    // 從 JSON 格式轉回 JS物件
+        return response.json()
+    })
+    .then(function(data){
+        sourceData = [...data];
+        // console.log(dataArr)
+    })
+    .catch(function(error){
+        //抓資料失敗 錯誤就會進來 catch
+        //倘若成功就會是data 那行
+        console.log(error)
+    })
 
-for(let i = 0 ; i < meilList.length; i++){
+   
+// fetch("https:")
 
-    if(meilList[i].category.includes(noodle.value)){
-        noodleList.push(meilList[i]);
-    }
-
-    if(meilList[i].category.includes(rice.value)){
-        riceList.push(meilList[i]);
-    }
-
-    if(meilList[i].category.includes(brunch.value)){
-        brunchList.push(meilList[i]);
-    }
-
-    if(meilList[i].category.includes(other.value)){
-        otherList.push(meilList[i]);
-    }
-
-}
-
+// console.log(dataArr)
 
 function doubleCheck(){
 for(let i = 0; i < checkList.length; i++){
     if(checkList[i].checked){
+        console.log(checkList[i])
         return false;
     }
 }
+    console.log("50")
     return true;
 }
 
 
-let filterArr =[] 
+
 
 function filter() {
+    newOrderList = JSON.parse(JSON.stringify(sourceData));
 
- if(doubleCheck()){
+    if(doubleCheck()){
     return;
- }
-
- checkList.forEach(i =>{
-    if(i.checked){
-        meilList.forEach(j =>{
-            if(j.category.includes(i.value)){
-                j.filter = true;
-            }
-        })
     }
- })
 
-meilList = meilList.filter(i => i.filter);
-const checkTest = Math.floor(Math.random() * meilList.length);
-console.log(meilList[checkTest].name);
-res.innerText = meilList[checkTest].name;
+    checkList.forEach(i =>{
+        console.log("65")
+        if(i.checked){
+            newOrderList.forEach(n =>{
+                console.log("68")
+                if(n.category.includes(i.value)){
+                    console.log("70")
+                    n.filter = true;
+                }
+            })
+        }
+    })
+
+    newOrderList = newOrderList.filter(i => i.filter);
+    console.log(newOrderList)
+// const checkTest = Math.floor(Math.random() * newOrderList.length);
+// console.log(newOrderList[checkTest].name);
+// res.innerText = newOrderList[checkTest].name;
 }
 
+
+function randomModel(){
+    const checkTest = Math.floor(Math.random() * sourceData.length);
+    if(newOrderList.length === 0){
+        console.log("~~~")
+        return;
+        }
+        const name  = sourceData[checkTest].name
+        console.log(name)
+        res.innerText = name;
+
+}
 start.addEventListener('click', () =>{
-   
-// // 過濾
-if(meilList.length !== 0){
-    filter();
-    }
+    // doubleCheck();
+//    console.log(dataArr) 
+    // console.log("這邊很重要")
+    // setTimeout(() =>{
+        filter();
+        randomModel();
+    // }, 500)
     
 
-//     if(noodle.checked){
-//         let random = Math.floor(Math.random() * noodleList.length)
-//         // if(noodleList[random].category.includes(noodle.value)){
-//         //     console.log(meilList[random]);
-//         // }
-//         console.log(noodleList[random].name)
-//         const name  = noodleList[random].name
-//         res.innerText = name;
-//         return;
-//     }
 
-//     if(rice.checked){
-//         let random = Math.floor(Math.random() * riceList.length)
-//         console.log(riceList[random].name)
-//         const name  = riceList[random].name
-//         res.innerText = name;
-//         return;
-//     }
+    
 
-//     if(brunch.checked){
-//         let random = Math.floor(Math.random() * brunchList.length)
-//         console.log(brunchList[random].name)
-//         const name  = brunchList[random].name
-//         res.innerText = name;
-//         return;
-//     }
-
-//     if(other.checked){
-//         let random = Math.floor(Math.random() * otherList.length)
-//         console.log(otherList[random].name)
-//         const name  = otherList[random].name
-//         res.innerText = name;
-//         return;
-//     }
-
-
-    const checkTest = Math.floor(Math.random() * meilList.length);
-//     // const arr = [];
-//     // arr.push(meilList[checkTest].name);
-//     // console.log(arr);
-    const name  = meilList[checkTest].name
-    res.innerText = name;
-
-//     // for(let i =0 ; i < checkList.length; i++){
-//     //     if(checkList[i].checked){
-//     //         console.log("BOOM!")
-//     //         break; 
-//     //     }
-//     //     console.log("nothing");
-//     //     console.log(i);
-//     // }
+    
 
 })
 
